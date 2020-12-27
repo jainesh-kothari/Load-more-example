@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
-import 'package:flutterapp/modal/product_dashbord_model.dart';
+import 'package:flutterapp/model/product_dashbord_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutterapp/util/app_constants.dart';
@@ -51,7 +51,18 @@ class _DashBoardState extends State<DashBoard> {
   @override
   void initState() {
     super.initState();
-    _dashboardList();
+
+    AppConstants.checkInternetConnectivity().then((intenet) {
+      if (intenet != null && intenet) {
+        _dashboardList();
+        print("Internet Available");
+      } else {
+        AppConstants.showAlertDialog(context);
+      }
+    });
+
+
+
   }
 
   @override
